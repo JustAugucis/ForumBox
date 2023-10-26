@@ -28,15 +28,16 @@ public class UserLogic : IUserLogic
         return created;
     }
 
-    public Task<User?> GetByUsernameAsync(string userName)
+    public Task<User?> GetByUsernameAsync(SearchUserParametersDto searchUserParametersDto)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User?> GetByIdAsync(int dtoOwnerId)
+    public Task<User?> GetByIdAsync(SearchUserParametersDto searchUserParametersDto)
     {
         throw new NotImplementedException();
     }
+    
     
     private static void ValidateData(UserRegisterDto dto)
     {
