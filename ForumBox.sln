@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileData", "FileData\FileDa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{5DB971B6-EB14-4058-B9F7-42CD7990F980}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp1", "BlazorApp1\BlazorApp1.csproj", "{253DA666-9454-45C1-801E-C68A58F0E7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClients", "HttpClients\HttpClients.csproj", "{C3D390D5-D7C4-42EA-AA3F-10AFA2C5CA01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,15 @@ Global
 		{5DB971B6-EB14-4058-B9F7-42CD7990F980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DB971B6-EB14-4058-B9F7-42CD7990F980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DB971B6-EB14-4058-B9F7-42CD7990F980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{253DA666-9454-45C1-801E-C68A58F0E7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{253DA666-9454-45C1-801E-C68A58F0E7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{253DA666-9454-45C1-801E-C68A58F0E7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{253DA666-9454-45C1-801E-C68A58F0E7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D390D5-D7C4-42EA-AA3F-10AFA2C5CA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D390D5-D7C4-42EA-AA3F-10AFA2C5CA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D390D5-D7C4-42EA-AA3F-10AFA2C5CA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D390D5-D7C4-42EA-AA3F-10AFA2C5CA01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
