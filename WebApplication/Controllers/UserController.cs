@@ -3,10 +3,11 @@ using Domain.DTOs;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Controllers;
+namespace WebApplication1.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+//[Route("[controller]")]
+[Route("api/CreateUser")]
 public class UsersController : ControllerBase
 {
     private readonly IUserLogic userLogic;
@@ -22,7 +23,7 @@ public class UsersController : ControllerBase
         try
         {
             User user = await userLogic.CreateAsync(dto);
-            return Created($"/CreateUser/{user.Id}", user); // tried messing witht this
+            return Created($"api/CreateUser{user.Id}", user); // tried messing witht this
         }
         catch (Exception e)
         {
