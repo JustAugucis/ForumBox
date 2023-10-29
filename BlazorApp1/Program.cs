@@ -24,7 +24,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 
 AuthorizationPolicies.AddPolicies(builder.Services);
 
-
 var app = builder.Build();
 
 

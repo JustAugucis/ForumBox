@@ -2,6 +2,7 @@ using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -37,7 +38,7 @@ public class JwtAuthService : IAuthService
 
         string token = responseContent;
         Jwt = token;
-
+        System.Console.WriteLine(Jwt);
         ClaimsPrincipal principal = CreateClaimsPrincipal();
 
         OnAuthStateChanged.Invoke(principal);
