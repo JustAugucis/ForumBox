@@ -16,24 +16,6 @@ public class FileContext
             return dataContainer!.Users;
         }
     }
-
-    public ICollection<SubRedit> SubRedits
-    {
-        get
-        {
-            LoadData();
-            return dataContainer!.SubRedits;
-        }
-    }
-    
-    public ICollection<Post> Posts
-    {
-        get
-        {
-            LoadData();
-            return dataContainer!.Posts;
-        }
-    }
     
     private void LoadData()
     {
@@ -43,9 +25,7 @@ public class FileContext
            {
                dataContainer = new ()
                {
-                   Users = new List<User>(),
-                   SubRedits = new List<SubRedit>(),
-                   Posts = new List<Post>() 
+                   Users = new List<User>()
                };
                return;
            }

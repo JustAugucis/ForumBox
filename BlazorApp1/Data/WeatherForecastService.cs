@@ -1,3 +1,5 @@
+using Shared.Models;
+
 namespace BlazorApp1.Data;
 
 public class WeatherForecastService

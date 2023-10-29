@@ -9,6 +9,12 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HttpClients\HttpClients.csproj" />
+      <ProjectReference Include="..\Shared\Shared.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="wwwroot\img\" />
     </ItemGroup>
 
 </Project>
