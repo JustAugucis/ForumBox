@@ -25,6 +25,7 @@ public class UserFileDao : IUserDao
 
     public Task<User?> GetByUsernameAsync(string userName)
     {
+        // line 29 dies 
         User? existing = context.Users.FirstOrDefault(u =>
             u.Username.Equals(userName, StringComparison.OrdinalIgnoreCase)
         );

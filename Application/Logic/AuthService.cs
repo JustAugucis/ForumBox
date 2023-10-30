@@ -18,10 +18,9 @@ public class AuthService : IAuthService
     }
     
 
-    public Task<User> ValidateUser(string username, string password)
+    public async Task<User> ValidateUser(string username, string password)
     {
-        User? existingUser = users.FirstOrDefault(u => 
-            u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+        User? existingUser = await userDao.GetByUsernameAsync(username);
         
         if (existingUser == null)
         {
@@ -33,7 +32,7 @@ public class AuthService : IAuthService
             throw new Exception("Password mismatch");
         }
 
-        return Task.FromResult(existingUser);
+        return await Task.FromResult(existingUser);
     }
 
     public Task RegisterUser(User user)
@@ -52,7 +51,8 @@ public class AuthService : IAuthService
         
         // save to persistence instead of list
         
-        users.Add(user);
+        userDao.CreateAsync(user);
+        
         
         return Task.CompletedTask;
     }
