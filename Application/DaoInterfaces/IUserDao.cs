@@ -1,4 +1,5 @@
 using Domain.Models;
+using Shared.Models;
 
 namespace Application.DaoInterfaces;
 

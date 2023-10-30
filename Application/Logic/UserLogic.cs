@@ -1,7 +1,8 @@
 using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Domain.DTOs;
-using Domain.Models;
+
+using Shared.Models;
 
 namespace Application.Logic;
 
@@ -21,7 +22,9 @@ public class UserLogic : IUserLogic
             throw new Exception("Username already taken!");
 
         ValidateData(dto);
-        User toCreate = new User(dto.UserName, dto.Password);
+        User toCreate = new User();
+        toCreate.Username = dto.UserName;
+        toCreate.Password = dto.Password;
         
         User created = await userDao.CreateAsync(toCreate);
         
