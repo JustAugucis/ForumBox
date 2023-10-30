@@ -1,5 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+using Application.DaoInterfaces;
 using Application.LogicInterfaces;
 using Shared.Models;
 
@@ -8,31 +10,13 @@ namespace Application.Logic;
 public class AuthService : IAuthService
 {
 
-    private readonly IList<User> users = new List<User>
+    private readonly IUserDao userDao;
+    
+    public AuthService(IUserDao userDao)
     {
-        new User
-        {
-            Age = 36,
-            Email = "trmo@via.dk",
-            Domain = "via",
-            Name = "Troels Mortensen",
-            Password = "onetwo3FOUR",
-            Role = "Teacher",
-            Username = "trmo",
-            SecurityLevel = 4
-        },
-        new User
-        {
-            Age = 34,
-            Email = "jakob@gmail.com",
-            Domain = "gmail",
-            Name = "Jakob Rasmussen",
-            Password = "password",
-            Role = "Student",
-            Username = "jknr",
-            SecurityLevel = 2
-        }
-    };
+        this.userDao = userDao;
+    }
+    
 
     public Task<User> ValidateUser(string username, string password)
     {
