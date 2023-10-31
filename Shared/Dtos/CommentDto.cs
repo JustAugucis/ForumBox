@@ -4,6 +4,6 @@ namespace Shared.Dtos;
 
 public class CommentDto
 {
-    public User owner{get; set; }
+    public String ownerName{get; set; }
     public string comment { get; set; }
 }
