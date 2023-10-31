@@ -14,7 +14,7 @@ public class FileContext
         get
         {
             LoadData();
-            return dataContainer!.Users;
+            return dataContainer.Users;
         }
     }
     
