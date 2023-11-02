@@ -1,22 +1,31 @@
 @page "/Posts"
 @using System.Security.Claims
+@using Domain.DTOs
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@inject IPostService postService
 
-<h3>Show Credentials 2</h3>
-<p>Here we can see the users credentials</p>
+<h3>Here you can see user posts</h3>
 
 @if (isLoggedIn)
 {
     <h3>Hello @name</h3>
+    <h1>@msg</h1>
     <p>
-        Your claims include:
-        <ol>
-            @foreach (Claim claim in userClaims!)
-            {
-                <li>
-                    <label>@claim.Type: @claim.Value</label>
-                </li>
-            }
-        </ol>
+        @if (posts != null)
+        {<p>
+             Posts:
+             <ul>
+                 @foreach (Post post in posts!)
+                 {
+                     <li>
+                         <label>@post.CreatorName: @post.Title</label>
+                     </li>
+                 }
+             </ul>
+        
+         </p>
+        }
     </p>
 }
 else
@@ -32,12 +41,30 @@ else
     private string? name;
     private IEnumerable<Claim>? userClaims;
     private bool isLoggedIn;
-
+    private IEnumerable<Post>? posts;
+    private string msg = "";
+    
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
         isLoggedIn = user.Identity != null;
+        msg = "";
+        try
+        {
+            SearchPostParametersDto dto = new SearchPostParametersDto();
+            dto.CreatorName = null;
+            dto.Title = null;
+            dto.body = null;
+            posts = await postService.GetPosts(dto);    // error here
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+        
+        
         
         if (!isLoggedIn) return;
         

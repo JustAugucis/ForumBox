@@ -33,9 +33,15 @@ public class PostFileDao : IPostDao
         return Task.FromResult(existing);
     }
 
-    public Task<IEnumerable<User>> GetAsync(SearchPostParametersDto searchParameters)
+    public Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
     {
-        throw new NotImplementedException();
+        IEnumerable<Post> posts = context.Posts.AsEnumerable();
+        if (searchParameters.Title != null)
+        {
+            posts = context.Posts.Where(u => u.Title.Contains(searchParameters.Title, StringComparison.OrdinalIgnoreCase));
+        }
+
+        return Task.FromResult(posts);
     }
 
     
