@@ -1,1 +1,1 @@
-{"Users":[{"Username":"test","Password":"test","Email":null,"Domain":null,"Name":null,"Role":null,"Age":0,"SecurityLevel":0}],"Posts":[]}
+{"Users":[{"Username":"test","Password":"test","Email":null,"Domain":null,"Name":null,"Role":null,"Age":0,"SecurityLevel":0}],"Posts":[{"CreatorName":"string","Title":"string","body":"string","comments":[]}]}

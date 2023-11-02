@@ -7,6 +7,7 @@ using FileData.DAOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Auth;
+using WebApplication1.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,11 @@ builder.Services.AddScoped<FileContext>();
 builder.Services.AddScoped<IUserDao, UserFileDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+// builder.Services.AddScoped<IPostLogic, PostLogic>(); // crashing the compiling
+builder.Services.AddScoped<IPostDao, PostFileDao>();
+builder.Services.AddScoped<IPostLogic, PostLogic>();
+
+builder.Services.AddScoped( sp => new HttpClient { BaseAddress = new Uri("https://localhost:7078") });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.RequireHttpsMetadata = false;

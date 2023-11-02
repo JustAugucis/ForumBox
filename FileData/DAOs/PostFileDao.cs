@@ -1,5 +1,6 @@
 using Application.DaoInterfaces;
 using Application.LogicInterfaces;
+using Domain.DTOs;
 using Shared.Models;
 
 namespace FileData.DAOs;
@@ -32,10 +33,10 @@ public class PostFileDao : IPostDao
         return Task.FromResult(existing);
     }
 
-    public Task<List<Post?>> GetAll()
+    public Task<IEnumerable<User>> GetAsync(SearchPostParametersDto searchParameters)
     {
-        List<Post?> existing = context.Posts.ToList();
-     
-        return Task.FromResult(existing);
+        throw new NotImplementedException();
     }
+
+    
 }

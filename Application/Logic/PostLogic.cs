@@ -1,5 +1,6 @@
 using Application.DaoInterfaces;
 using Application.LogicInterfaces;
+using Domain.DTOs;
 using Shared.Dtos;
 using Shared.Models;
 
@@ -32,6 +33,9 @@ public class PostLogic : IPostLogic
         
         return created;
     }
-    
-    
+
+    public Task<IEnumerable<Task>> GetAsync(SearchPostParametersDto searchPostParametersDto)
+    {
+        return postDao.GetAsync(searchPostParametersDto);
+    }
 }
