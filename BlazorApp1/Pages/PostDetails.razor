@@ -1,0 +1,87 @@
+@page "/Posts/{title}"
+@using BlazorWasm.Services
+@using Domain.DTOs
+@using System.Security.Claims
+@using global::Shared.Models
+@using HttpClients.ClientInterfaces
+@inject IPostService postService
+@attribute [Authorize]
+
+
+<h3>Here you can see user posts</h3>
+
+@if (isLoggedIn)
+{
+    <p>
+        @if (post != null)
+        {<h1>
+             Post Title: @post.Title  Written by: @post.CreatorName 
+         </h1>
+            <p>
+                Post body: @post.body
+            </p>
+            <ul>
+                @foreach (Comment comment in post.comments)
+                {
+                <li><label>@comment.ownerName: @comment.comment</label></li>
+            }
+            </ul>
+        }
+    </p>
+
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+    
+    
+    [Parameter]
+    public string title { get; set; }
+    
+    
+    
+    private string? name;
+    private IEnumerable<Claim>? userClaims;
+    private bool isLoggedIn;
+    private Post post;
+    private string msg = "";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        
+        
+        AuthenticationState authState = await AuthState;
+        ClaimsPrincipal user = authState.User;
+        
+        isLoggedIn = user.Identity != null;
+        msg = "";
+        try
+        {
+            SearchPostParametersDto dto = new SearchPostParametersDto();
+            dto.CreatorName = null;
+            dto.Title = title;
+            dto.body = null;
+            IEnumerable<Post> posts = await postService.GetPosts(dto);    // error here
+            post = posts.First();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            msg = e.Message;
+        }
+        
+        
+        
+        if (!isLoggedIn) return;
+        
+        userClaims = user.Claims;
+        name = user.Identity!.Name!;
+    }
+
+}
+
+
+}
+
+

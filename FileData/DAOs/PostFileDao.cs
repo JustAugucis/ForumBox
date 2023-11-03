@@ -38,7 +38,7 @@ public class PostFileDao : IPostDao
         IEnumerable<Post> posts = context.Posts.AsEnumerable();
         if (searchParameters.Title != null)
         {
-            posts = context.Posts.Where(u => u.Title.Contains(searchParameters.Title, StringComparison.OrdinalIgnoreCase));
+            posts = context.Posts.Where(u => u.Title.Equals(searchParameters.Title, StringComparison.OrdinalIgnoreCase));
         }
 
         return Task.FromResult(posts);

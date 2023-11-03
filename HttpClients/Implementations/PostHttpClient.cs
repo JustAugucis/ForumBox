@@ -36,7 +36,7 @@ public class PostHttpClient : IPostService
         string uri = "/Post";
         if (!string.IsNullOrEmpty(postParameters.Title))    // for now only title filtering
         {
-            uri += $"?username={Uri.EscapeDataString(postParameters.Title)}";
+            uri += $"?Title={Uri.EscapeDataString(postParameters.Title)}";
         }
         HttpResponseMessage response = await client.GetAsync(uri);
         string result = await response.Content.ReadAsStringAsync();     

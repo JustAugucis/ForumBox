@@ -27,7 +27,15 @@ public class PostLogic : IPostLogic
         toCreate.Title = dto.Title;
         toCreate.CreatorName = dto.CreatorName;
         toCreate.body = dto.body;
-        toCreate.comments = new List<Comment>();
+
+        if (dto.comments == null)
+        {
+            toCreate.comments = new List<Comment>();
+        }
+        else
+        {
+            toCreate.comments = dto.comments;
+        }
         
         Post created = await postDao.CreateAsync(toCreate);
         
