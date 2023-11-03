@@ -9,6 +9,7 @@ using HttpClients.Implementations;
 using Microsoft.AspNetCore.Components.Authorization;
 using Shared.Auth;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -22,11 +23,14 @@ builder.Services.AddScoped<IAuthService, JwtAuthService>();
 builder.Services.AddScoped<IPostService, PostHttpClient>();
 
 
+
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthProvider>();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7078")});
 
 AuthorizationPolicies.AddPolicies(builder.Services);
+
+
 
 var app = builder.Build();
 
