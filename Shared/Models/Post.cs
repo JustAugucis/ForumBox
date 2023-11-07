@@ -12,7 +12,7 @@ public class Post
     public string Title { get; set; }
     public string body { get; set; }
     
-    [JsonIgnore]
+    //[JsonIgnore]
     public virtual ICollection<Comment> Comment { get; set; }
 
     

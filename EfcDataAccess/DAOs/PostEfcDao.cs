@@ -1,6 +1,7 @@
 using Application.DaoInterfaces;
 using Domain.DTOs;
 using FileData;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Models;
 
@@ -32,14 +33,31 @@ public class PostEfcDao : IPostDao
         
     }
 
-    public Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
+    public async Task<IEnumerable<Post>> GetAsync(SearchPostParametersDto searchParameters)
     {
-        IEnumerable<Post> posts = context.posts.AsEnumerable();
+        IQueryable<Post> query = context.posts.AsQueryable();
+        
+        //IQueryable<Post> query = context.posts.Include(post => post.CreatorName).AsQueryable();
+    
+        if (!string.IsNullOrEmpty(searchParameters.CreatorName))
+        {
+            // we know username is unique, so just fetch the first
+            query = query.Where(post =>
+                post.CreatorName.ToLower().Equals(searchParameters.CreatorName.ToLower()));
+        }
+    
         if (searchParameters.Title != null)
         {
-            posts = context.posts.Where(u => u.Title.ToLower().Equals(searchParameters.Title));
+            query = query.Where(t => t.Title == searchParameters.Title);
+        }
+    
+        if (!string.IsNullOrEmpty(searchParameters.body))
+        {
+            query = query.Where(t =>
+                t.body.ToLower().Contains(searchParameters.body.ToLower()));
         }
 
-        return Task.FromResult(posts);
+        List<Post> result = await query.ToListAsync();
+        return result;
     }
 }
