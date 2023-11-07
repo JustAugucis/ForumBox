@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Shared.Models;
 
+[NotMapped]
 public class WeatherForecast
 {
     public DateOnly Date { get; set; }

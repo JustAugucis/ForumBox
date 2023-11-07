@@ -30,11 +30,11 @@ public class PostLogic : IPostLogic
 
         if (dto.comments == null)
         {
-            toCreate.comments = new List<Comment>();
+            toCreate.Comment = new List<Comment>();
         }
         else
         {
-            toCreate.comments = dto.comments;
+            toCreate.Comment = dto.comments;
         }
         
         Post created = await postDao.CreateAsync(toCreate);

@@ -20,12 +20,14 @@
             <p>
                 Post body: @post.body
             </p>
+            @if (post.Comment != null){
             <ul>
-                @foreach (Comment comment in post.comments)
+                @foreach (Comment comment in post.Comment)
                 {
-                <li><label>@comment.ownerName: @comment.comment</label></li>
-            }
+                    <li><label>@comment.ownerName: @comment.comment</label></li>
+                }
             </ul>
+            }
         }
     </p>
 

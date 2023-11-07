@@ -26,6 +26,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPostDao, PostEfcDao>();
 builder.Services.AddScoped<IPostLogic, PostLogic>();
 
+builder.Services.AddDbContext<TodoContext>();
+
+
+
 builder.Services.AddScoped( sp => new HttpClient { BaseAddress = new Uri("https://localhost:7078") });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
