@@ -4,6 +4,7 @@
 @using System.Security.Claims
 @using global::Shared.Models
 @using HttpClients.ClientInterfaces
+@using Microsoft.AspNetCore.Http.Extensions
 @inject IPostService postService
 @inject IcommentService commentService
 @attribute [Authorize]
@@ -15,35 +16,47 @@
 {
     <p>
         @if (post != null)
-        {<h1>
-             Post Title: @post.Title  Written by: @post.Username
-         </h1>
+        {
+            <h1>
+                Post Title: @post.Title Written by: @post.Username
+            </h1>
             <p>
                 Post body: @post.body
             </p>
-            @if (comments != null){
-            <ul>
-                @foreach (Comment comment in comments)
-                {
-                    <li><label>@comment.ownerName: @comment.comment</label></li>
-                }
-            </ul>
+            @if (comments != null)
+            {
+                <ul>
+                    @foreach (Comment comment in comments)
+                    {
+                        <li><label>@comment.ownerName: @comment.comment</label></li>
+                    }
+                </ul>
             }
         }
     </p>
+    <p>
+        <div class="field">
+            <label>Write a comment: </label>
+            <input type="text" @bind="newComment"/>
+        </div>
+        <div class="field">
+            <button class="createCommentbtn" @onclick="CreateComment">Post</button>
+        </div>
+    </p>
+
 
 
 @code {
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
-    
-    
+
+
     [Parameter]
     public string title { get; set; }
-    
-    
-    
+
+    private string newComment = "";
+
     private string? name;
     private IEnumerable<Claim>? userClaims;
     private bool isLoggedIn;
@@ -53,11 +66,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
-        
+
+
         AuthenticationState authState = await AuthState;
         ClaimsPrincipal user = authState.User;
-        
+
         isLoggedIn = user.Identity != null;
         msg = "";
         try
@@ -66,29 +79,53 @@
             dto.CreatorName = null;
             dto.Title = title;
             dto.body = null;
-            IEnumerable<Post> posts = await postService.GetPosts(dto);    // error here
+            IEnumerable<Post> posts = await postService.GetPosts(dto); // error here
             post = posts.First();
-            GetCommentsAtPostDto commentsAtPostDto = new GetCommentsAtPostDto();
-            commentsAtPostDto.PostTitle = title;
-            comments = await commentService.GetCommentsByTitle(commentsAtPostDto);
+
+    // get comments
+            await LoadComments();
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
             msg = e.Message;
         }
-        
-        
-        
+
+
+
         if (!isLoggedIn) return;
-        
+
         userClaims = user.Claims;
         name = user.Identity!.Name!;
     }
 
+    private async Task CreateComment()
+    {
+        CreateNewCommentAtPostDto dto = new CreateNewCommentAtPostDto();
+        dto.comment = newComment;
+        dto.PostTitle = this.title;
+        dto.ownerName = name;
+         // Assuming CreateAsync returns a Task or void
+        await commentService.CreateAsync(dto);
+        // After creating the comment, fetch the updated comments
+        await LoadComments();
+    }
+
+    private async Task LoadComments()
+    {
+        try
+        {
+            GetCommentsAtPostDto commentsAtPostDto = new GetCommentsAtPostDto();
+            commentsAtPostDto.PostTitle = title;
+            comments = await commentService.GetCommentsByTitle(commentsAtPostDto);
+            newComment = "";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+    // Handle the exception if necessary
+        }
+    }
+
+}    
 }
-
-
-}
-
-
