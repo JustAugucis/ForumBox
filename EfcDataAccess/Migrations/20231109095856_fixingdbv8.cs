@@ -5,24 +5,11 @@
 namespace EfcDataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class fixingdbv8 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Todos",
-                columns: table => new
-                {
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatorName = table.Column<string>(type: "TEXT", nullable: false),
-                    body = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Todos", x => x.Title);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -42,6 +29,25 @@ namespace EfcDataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "posts",
+                columns: table => new
+                {
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
+                    body = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_posts", x => x.Title);
+                    table.ForeignKey(
+                        name: "FK_posts_Users_Username",
+                        column: x => x.Username,
+                        principalTable: "Users",
+                        principalColumn: "Username",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -49,22 +55,28 @@ namespace EfcDataAccess.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ownerName = table.Column<string>(type: "TEXT", nullable: false),
                     comment = table.Column<string>(type: "TEXT", nullable: false),
-                    PostTitle = table.Column<string>(type: "TEXT", nullable: true)
+                    PostTitle = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Comments_Todos_PostTitle",
+                        name: "FK_Comments_posts_PostTitle",
                         column: x => x.PostTitle,
-                        principalTable: "Todos",
-                        principalColumn: "Title");
+                        principalTable: "posts",
+                        principalColumn: "Title",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostTitle",
                 table: "Comments",
                 column: "PostTitle");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_posts_Username",
+                table: "posts",
+                column: "Username");
         }
 
         /// <inheritdoc />
@@ -74,10 +86,10 @@ namespace EfcDataAccess.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "posts");
 
             migrationBuilder.DropTable(
-                name: "Todos");
+                name: "Users");
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfcDataAccess.Migrations
 {
     [DbContext(typeof(TodoContext))]
-    [Migration("20231107135733_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231109095856_fixingdbv8")]
+    partial class fixingdbv8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,7 @@ namespace EfcDataAccess.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PostTitle")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("comment")
@@ -48,7 +49,7 @@ namespace EfcDataAccess.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatorName")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -58,7 +59,9 @@ namespace EfcDataAccess.Migrations
 
                     b.HasKey("Title");
 
-                    b.ToTable("Todos");
+                    b.HasIndex("Username");
+
+                    b.ToTable("posts");
                 });
 
             modelBuilder.Entity("Shared.Models.User", b =>
@@ -95,14 +98,29 @@ namespace EfcDataAccess.Migrations
 
             modelBuilder.Entity("Shared.Models.Comment", b =>
                 {
-                    b.HasOne("Shared.Models.Post", null)
-                        .WithMany("Comment")
-                        .HasForeignKey("PostTitle");
+                    b.HasOne("Shared.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostTitle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("Shared.Models.Post", b =>
                 {
-                    b.Navigation("Comment");
+                    b.HasOne("Shared.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("Username")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Shared.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

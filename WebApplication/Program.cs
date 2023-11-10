@@ -24,7 +24,10 @@ builder.Services.AddScoped<IUserDao, UserEfcDao>();
 builder.Services.AddScoped<IUserLogic, UserLogic>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPostDao, PostEfcDao>();
+builder.Services.AddScoped<ICommentDao, CommentEfcDao>();
 builder.Services.AddScoped<IPostLogic, PostLogic>();
+builder.Services.AddScoped<ICommentLogic, CommentLogic>();
+
 
 builder.Services.AddDbContext<TodoContext>();
 

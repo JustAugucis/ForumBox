@@ -13,6 +13,10 @@ public class Comment
     public String ownerName{get; set; }
     public string comment { get; set; }
     
+    public Post Post { get; set; }
+    [ForeignKey("posts")]
+    public string PostTitle { get; set; }
+
 
     public Comment()
     {

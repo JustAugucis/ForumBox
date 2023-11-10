@@ -6,14 +6,16 @@ namespace Shared.Models;
 
 public class Post
 {
+    
+    public User User { get; set; }
     [ForeignKey("User")]
-    public string CreatorName { get; set; }
+    public string Username { get; set; }
     [Key]
-    public string Title { get; set; }
+    public string Title { get; set; }   // unique?
     public string body { get; set; }
     
     //[JsonIgnore]
-    public virtual ICollection<Comment> Comment { get; set; }
+    public ICollection<Comment> Comments { get; set; }
 
     
     public Post()

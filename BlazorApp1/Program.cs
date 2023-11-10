@@ -21,6 +21,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IUserService, UserHttpClient>();
 builder.Services.AddScoped<IAuthService, JwtAuthService>();
 builder.Services.AddScoped<IPostService, PostHttpClient>();
+builder.Services.AddScoped<IcommentService, CommentHttpClient>();
 
 
 

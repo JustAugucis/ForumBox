@@ -43,7 +43,7 @@ public class PostEfcDao : IPostDao
         {
             // we know username is unique, so just fetch the first
             query = query.Where(post =>
-                post.CreatorName.ToLower().Equals(searchParameters.CreatorName.ToLower()));
+                post.User.Name.ToLower().Equals(searchParameters.CreatorName.ToLower()));
         }
     
         if (searchParameters.Title != null)

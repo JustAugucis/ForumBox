@@ -23,7 +23,7 @@
                  @foreach (Post post in posts!)
                  {
                      <li style="color:darkblue" @onclick="@(() => navMgr.NavigateTo($"/Posts/{@post.Title}"))">
-                         <label>@post.CreatorName: @post.Title</label>
+                         <label>@post.Username: @post.Title</label>
                      </li>
                  }
              </ul>
